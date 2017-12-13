@@ -13,31 +13,42 @@ using Microsoft.Extensions.Options;
 using fantastic.Models;
 using fantastic.Models.AccountViewModels;
 using fantastic.Services;
-using fantastic.Models.LeagueViewModels;
 
 namespace fantastic.Controllers
 {
     public class LeagueController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public LeagueController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IEmailSender emailSender,
+            ILogger<AccountController> logger)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
         [HttpGet]
         [Route("draft/dashboard")]
         public IActionResult Dashboard()
         {
-            IndexBundle model = new IndexBundle();
+            NewLeague model = new NewLeague();
             return View(model);
         }
         [HttpPost]
         [Route("draft/create")]
-        public IActionResult Create(IndexBundle data)
+        public IActionResult Create(NewLeague data)
         {
             NewLeague newbie = new NewLeague();
-            newbie = data.create;
+            newbie = data;
             TryValidateModel(newbie);
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View();
+                return RedirectToAction("Index", "HomeController");
             }
-            return View("Draft", data);
+            return View("Dashboard", data);
         }
     }
 }
