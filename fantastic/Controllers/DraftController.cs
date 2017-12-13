@@ -52,6 +52,7 @@ namespace fantastic.Controllers
             if (ModelState.IsValid)
             {
                 League newest = new League();
+                newest.Name = data.Name;
                 newest.StartDate = data.Start;
                 newest.EndDate = data.End;
                 newest.CreatedAt = DateTime.Now;
