@@ -1,33 +1,32 @@
 ﻿
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "New League Registration";
 }
+
 @using fantastic.Models;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model fantastic.Models.LeagueViewModels.IndexViewModel
+@model fantastic.Models.LeagueViewModels.IndexBundle
 
-<h2>League Dashboard</h2>
-
-<form asp-controller="League" asp-action="create" method="POST">
+<form asp-controller="Draft" asp-action="create" method="POST">
     <h5>
-        <label asp-for="newLeague.Name"></label>
-        <input asp-for="newLeague.Name" />
-        <span asp-validation-for="newLeague.Name"></span>
+        <label asp-for="create.Name"></label>
+        <input asp-for="create.Name" />
+        <span asp-validation-for="create.Name"></span>
     </h5>
     <h5>
-        <label asp-for="newLeague.Start"></label>
-        <input asp-for="newLeague.Start" />
-        <span asp-validation-for="newLeague.Start"></span>
+        <label asp-for="create.Start"></label>
+        <input asp-for="create.Start" />
+        <span asp-validation-for="create.Start"></span>
     </h5>
     <h5>
-        <label asp-for="newLeague.End"></label>
-        <input asp-for="newLeague.End" />
-        <span asp-validation-for="newLeague.End"></span>
+        <label asp-for="create.End"></label>
+        <input asp-for="create.End" />
+        <span asp-validation-for="create.End"></span>
     </h5>
     <h5>
-        <label asp-for="newLeague.Duration"></label>
-        <input asp-for="newLeague.Duration" />
-        <span asp-validation-for="newLeague.Duration"></span>
+        <label asp-for="create.Duration"></label>
+        <input asp-for="create.Duration" />
+        <span asp-validation-for="create.Duration"></span>
     </h5>
     <button type="submit">Create League</button>
 </form>

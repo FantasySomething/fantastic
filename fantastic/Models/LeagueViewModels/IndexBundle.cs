@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace fantastic.Models.LeagueViewModels
 {
-    public class IndexViewModel
+    public class IndexBundle
     {
-        public NewLeague newLeague;
+        public NewLeague create;
         public ApplicationUser User;
-        public List<League> AllLeagues;
     }
 }
