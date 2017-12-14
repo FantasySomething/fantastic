@@ -35,14 +35,14 @@ namespace fantastic.Controllers
             _context = context;
         }
         [HttpGet]
-        [Route("draft/dashboard")]
+        [Route("league/dashboard")]
         public IActionResult Dashboard()
         {
             NewLeague model = new NewLeague();
             return View(model);
         }
         [HttpPost]
-        [Route("draft/create")]
+        [Route("league/create")]
         public IActionResult Create(NewLeague data)
         {
             string id = _userManager.GetUserId(User);
