@@ -8,6 +8,7 @@ using fantastic.Models;
 using fantastic.Models.AccountViewModels;
 using fantastic.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace fantastic.Controllers
 {
@@ -32,6 +33,13 @@ namespace fantastic.Controllers
             if(_signInManager.IsSignedIn(User))
             {
                 model.myLeagues = _context.leagues.Where(l => l.AdminId == _userManager.GetUserId(User)).ToList();
+                model.myTeams = _context.teams.Where(t => t.userId == _userManager.GetUserId(User)).ToList();
+                model.aLeagues = _context.leagues
+                    .Join(_context.teams, l => l.Id, t => t.leagueId, (l, t) => new { l, t })
+                    .Where(z => z.t.userId != _userManager.GetUserId(User))
+                    .Where(z => z.l.StartDate >= DateTime.Now)
+                    .Select(z => z.l)
+                    .ToList();
             }
             else
             {

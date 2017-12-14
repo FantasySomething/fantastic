@@ -75,32 +75,33 @@
             @Html.ActionLink("Start a League", "Dashboard", "Draft")
         </div>
         <div class="col-md-3">
-            <h2>Top 3 Players</h2>
+            <h2>My Leagues</h2>
             <ul>
                 @foreach(var league in Model.myLeagues)
                 {
                     <li>@league.Name</li>
 
                 }
-                <li>Player 1</li>
-                <li>Player 2</li>
-                <li>Player 3</li>
             </ul>
         </div>
         <div class="col-md-3">
-            <h2>Highlights</h2>
+            <h2>My Teams</h2>
             <ul>
-                <li>Highlight 1</li>
-                <li>Highlight 2</li>
-                <li>Highlight 3</li>
+                @foreach(var team in Model.myTeams)
+                {
+                    <li>@team.league.Name</li>
+
+                }
             </ul>
         </div>
         <div class="col-md-3">
-            <h2>Top Admins</h2>
+            <h2>Open Leagues</h2>
             <ul>
-                <li>Highlight 1</li>
-                <li>Highlight 2</li>
-                <li>Highlight 3</li>
+                @foreach(var league in Model.aLeagues)
+                {
+                    <li>@league.Name</li>
+
+                }
             </ul>
         </div>
     </div>
