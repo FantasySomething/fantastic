@@ -9,11 +9,12 @@ namespace fantastic.Models
     public class League
     {
         public int Id { get; set; }
-        public int AdminId { get; set; }
+        public string Name { get; set; }
+        public string AdminId { get; set; }
         public ApplicationUser Admin { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int winnerId { get; set; }
+        public string winnerId { get; set; }
         public ApplicationUser winner { get; set; }
         public int Length { get; set; }
         public int UnitTime { get; set; }

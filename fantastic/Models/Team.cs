@@ -12,7 +12,7 @@ namespace fantastic.Models
         public League league { get; set; }
         public int leagueId { get; set; }
         public ApplicationUser user { get; set; }
-        public int userId { get; set; }
+        public string userId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public List<Athlete> athletes { get; set; }
