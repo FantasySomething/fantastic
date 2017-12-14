@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using fantastic.Models;
 using fantastic.Models.AccountViewModels;
+using fantastic.Models.LeagueViewModels;
 using fantastic.Services;
 using fantastic.Data;
 
@@ -66,6 +67,15 @@ namespace fantastic.Controllers
                 return RedirectToAction("Index", "");
             }
             return View("Dashboard", data);
+        }
+        [HttpGet]
+        [Route("league/details/{ID}")]
+        public IActionResult Details(int ID)
+        {
+            DetailsViewModel model = new DetailsViewModel();
+            model.current = _context.leagues.SingleOrDefault(l => l.Id == ID);
+            model.user = _context.users.SingleOrDefault(user => user.Id == _userManager.GetUserId(User));
+            return View(model);
         }
     }
 }

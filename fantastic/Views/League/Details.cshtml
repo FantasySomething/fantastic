@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Details";
+}
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using fantastic.Models;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model fantastic.Models.LeagueViewModels.DetailsViewModel
+
+<h1>@Model.current.Name</h1>
+@if(DateTime.Now<Model.current.StartDate)
+{
+    @if(Model.current.Admin == Model.user)
+    {
+        <h4>League enrollment in progress...</h4>
+    }
+    else
+    {
+        <h4>This league is currently accepting new teams.</h4>
+        <a href="/teams/create"><button>Register a Team</button></a>
+    }
+}
+else if (DateTime.Now < Model.current.StartDate.AddDays(Model.current.Length))
+{
+    <h4>DRAFT IN PROGRESS!</h4>
+}
+else if(DateTime.Now<Model.current.EndDate)
+{
+    <h4>This league is active</h4>
+}
+else
+{
+    <h4>This league is inactive</h4>
+}
+
+<h3>Start: @Model.current.StartDate.ToShortDateString()</h3>
+<h3>Completion: @Model.current.EndDate.ToShortDateString()</h3>

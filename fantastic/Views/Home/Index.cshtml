@@ -79,7 +79,7 @@
             <ul>
                 @foreach(var league in Model.myLeagues)
                 {
-                    <li>@league.Name</li>
+                    <li><a href="/league/details/@league.Id">@league.Name</a></li>
 
                 }
             </ul>
@@ -89,7 +89,7 @@
             <ul>
                 @foreach(var team in Model.myTeams)
                 {
-                    <li>@team.league.Name</li>
+                    <li><a href="/team/details/@team.Id">@team.league.Name</a></li>
 
                 }
             </ul>
@@ -99,7 +99,7 @@
             <ul>
                 @foreach(var league in Model.aLeagues)
                 {
-                    <li>@league.Name</li>
+                    <li><a href="/league/details/@league.Id">@league.Name</a></li>
 
                 }
             </ul>
