@@ -9,6 +9,7 @@ namespace fantastic.Models
     public class Team
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public League league { get; set; }
         public int leagueId { get; set; }
         public ApplicationUser user { get; set; }
