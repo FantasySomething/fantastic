@@ -27,6 +27,7 @@ namespace fantastic.Models
         public int error { get; set; }
         public int goal { get; set; }
         public int assist { get; set; }
+        public DateTime Day { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
