@@ -35,11 +35,28 @@ namespace fantastic.Controllers
                 model.myLeagues = _context.leagues.Where(l => l.AdminId == _userManager.GetUserId(User)).ToList();
                 model.myTeams = _context.teams.Where(t => t.userId == _userManager.GetUserId(User)).ToList();
                 model.aLeagues = _context.leagues
-                    .Join(_context.teams, l => l.Id, t => t.leagueId, (l, t) => new { l, t })
-                    .Where(z => z.t.userId != _userManager.GetUserId(User))
-                    .Where(z => z.l.StartDate >= DateTime.Now)
-                    .Select(z => z.l)
+                    .Include("teams")
+                    .Where(l => l.StartDate >= DateTime.Now)
                     .ToList();
+                int i = 0;
+                while(i < model.aLeagues.Count)
+                {
+                    if(model.aLeagues[i].AdminId == _userManager.GetUserId(User))
+                    {
+                        model.aLeagues.RemoveAt(i);
+                    }
+                    else
+                    {
+                        for(int j =0; j < model.aLeagues[i].teams.Count; j++)
+                        {
+                            if(model.aLeagues[i].teams[j].userId == _userManager.GetUserId(User))
+                            {
+                                model.aLeagues.RemoveAt(i);
+                            }
+                        }
+                        i++;
+                    }
+                }
             }
             else
             {
