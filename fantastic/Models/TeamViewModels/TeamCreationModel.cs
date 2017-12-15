@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace fantastic.Models.TeamViewModels
         [Required]
         [Display(Name = "League Name")]
         public string Name { get; set; }
+
+        [HiddenInput]
+        public int league { get; set; }
     }
 }

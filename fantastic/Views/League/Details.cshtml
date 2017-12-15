@@ -17,7 +17,7 @@
     else
     {
         <h4>This league is currently accepting new teams.</h4>
-        <a href="/team/create"><button>Register a Team</button></a>
+        <a href="/team/create/@Model.current.Id"><button>Register a Team</button></a>
     }
 }
 else if (DateTime.Now < Model.current.StartDate.AddDays(Model.current.Length))
