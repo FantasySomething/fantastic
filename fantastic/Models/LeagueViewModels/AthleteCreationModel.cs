@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace fantastic.Models.LeagueViewModels
 {
@@ -18,6 +19,10 @@ namespace fantastic.Models.LeagueViewModels
 
         [Required]
         [Display(Name = "Name")]
-        public int Name { get; set; }
+        public string name { get; set; }
+
+        [HiddenInput]
+        public int league { get; set; }
+
     }
 }

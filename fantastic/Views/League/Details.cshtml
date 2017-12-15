@@ -3,7 +3,7 @@
 }
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@using fantastic.Models;
+@using fantastic.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model fantastic.Models.LeagueViewModels.DetailsViewModel
 
@@ -35,3 +35,46 @@ else
 
 <h3>Start: @Model.current.StartDate.ToShortDateString()</h3>
 <h3>Completion: @Model.current.EndDate.ToShortDateString()</h3>
+
+<div>
+    <h3>Athletes available for draft:</h3>
+</div>
+<div>
+
+</div>
+@if(Model.current.Admin == Model.user)
+{
+    <form asp-controller="League" asp-action="newAthlete" name="newAthlete" method="post">
+        <h5>
+            <label asp-for="newAthlete.sport"></label>
+            <select asp-for="newAthlete.sport">
+                @foreach(Sport sport in Model.allSports)
+                {
+                    <option value=@sport.Id>@sport.Name</option>
+                }
+            </select>
+            <span asp-validation-for="newAthlete.sport"></span>
+        </h5>
+        <h5>
+            <label asp-for="newAthlete.season"></label>
+            <input asp-for="newAthlete.season" />
+            <span asp-validation-for="newAthlete.season"></span>
+        </h5>
+        <h5>
+            <label asp-for="newAthlete.name"></label>
+            <input asp-for="newAthlete.name" />
+            <span asp-validation-for="newAthlete.name"></span>
+        </h5>
+        <input asp-for="newAthlete.league" value=@Model.current.Id/>
+        <button type="submit">Add Athlete!</button>
+    </form>
+
+    <form asp-controller="League" asp-action="addAthlete" name="addAthlete" method="post">
+        <h5>
+            <label asp-for ="addAthlete.athlete"></label>
+            <input asp-for ="addAthlete.athlete" />
+            <span asp-validation-for="addAthlete.athlete"></span>
+        </h5>
+    </form>
+
+}

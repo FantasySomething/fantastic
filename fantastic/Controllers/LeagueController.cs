@@ -75,7 +75,15 @@ namespace fantastic.Controllers
             DetailsViewModel model = new DetailsViewModel();
             model.current = _context.leagues.SingleOrDefault(l => l.Id == ID);
             model.user = _context.users.SingleOrDefault(user => user.Id == _userManager.GetUserId(User));
+            model.allSports = _context.sports.ToList();
             return View(model);
+        }
+        [HttpPost]
+        [Route("league/newAthlete")]
+        public IActionResult NewAthlete(DetailsViewModel data)
+        {
+            int ID = 2;
+            return RedirectToAction("Details", ID);
         }
     }
 }
