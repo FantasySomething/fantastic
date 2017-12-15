@@ -47,13 +47,13 @@ namespace fantastic.Controllers
                     }
                     else
                     {
-                        //    for(int j =0; j < model.aLeagues[i].teams?.Count; j++)
-                        //    {
-                        //        if(model.aLeagues[i].teams[j].userId == _userManager.GetUserId(User))
-                        //        {
-                        //            model.aLeagues.RemoveAt(i);
-                        //        }
-                        //    }
+                        foreach(Team t in model.aLeagues[i].teams)
+                        {
+                            if(t.userId == _userManager.GetUserId(User))
+                            {
+                                model.aLeagues.RemoveAt(i);
+                            }
+                        }
                         i++;
                     }
                 }
