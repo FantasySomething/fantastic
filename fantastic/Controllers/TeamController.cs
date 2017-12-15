@@ -68,5 +68,16 @@ namespace fantastic.Controllers
             _context.SaveChanges();
             return RedirectToAction("Details", "League", new { ID = next.leagueId });
         }
+
+        [HttpGet]
+        [Route("team/display/{ID}")]
+        public IActionResult Display(int ID)
+        {
+            DisplayViewModel model = new DisplayViewModel();
+            model.myTeam = _context.teams.SingleOrDefault(t => t.Id == ID);
+            model.myPlayers = _context.athletes.Where(a => a.team.Id == ID).ToList();
+            model.myLeague = _context.leagues.SingleOrDefault(l => l.Id == model.myTeam.leagueId);
+            return View(model);
+        }
     }
 }
