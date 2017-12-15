@@ -51,7 +51,22 @@ namespace fantastic.Controllers
         [Route("team/addTeam")]
         public IActionResult AddTeam(TCViewModel incoming)
         {
-            return View();
+            Team next = new Team();
+            next.Name = incoming.TC.Name;
+            next.leagueId = incoming.TC.league;
+            next.league = _context.leagues.SingleOrDefault(l => l.Id == next.leagueId);
+            next.userId = _userManager.GetUserId(User);
+            next.user = _context.Users.SingleOrDefault(u => u.Id == next.userId);
+            next.CreatedAt = DateTime.Now;
+            next.UpdatedAt = DateTime.Now;
+            next.wins = 0;
+            next.losses = 0;
+            next.ties = 0;
+            next.athletes = new List<Athlete>();
+            _context.teams.Add(next);
+            next.league.UpdatedAt = DateTime.Now;
+            _context.SaveChanges();
+            return RedirectToAction("Details", "League", new { ID = next.leagueId });
         }
     }
 }

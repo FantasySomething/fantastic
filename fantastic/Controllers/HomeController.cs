@@ -47,20 +47,20 @@ namespace fantastic.Controllers
                     }
                     else
                     {
-                        for(int j =0; j < model.aLeagues[i].teams.Count; j++)
-                        {
-                            if(model.aLeagues[i].teams[j].userId == _userManager.GetUserId(User))
-                            {
-                                model.aLeagues.RemoveAt(i);
-                            }
-                        }
+                        //    for(int j =0; j < model.aLeagues[i].teams?.Count; j++)
+                        //    {
+                        //        if(model.aLeagues[i].teams[j].userId == _userManager.GetUserId(User))
+                        //        {
+                        //            model.aLeagues.RemoveAt(i);
+                        //        }
+                        //    }
                         i++;
                     }
                 }
             }
             else
             {
-                model.aLeagues = _context.leagues.Where(l => l.StartDate > DateTime.Now).ToList();
+                model.aLeagues = _context.leagues?.Where(l => l.StartDate > DateTime.Now).ToList();
             }
             return View(model);
         }
