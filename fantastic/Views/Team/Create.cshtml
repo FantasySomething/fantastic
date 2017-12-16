@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+}
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using fantastic.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model fantastic.Models.TeamViewModels.TCViewModel
+
+<h2>Create</h2>
+<form asp-controler="Team" asp-action="addTeam" name="addTeam" method="post">
+    <h4>
+        <label asp-for="TC.Name"></label>
+        <input asp-for="TC.Name"/>
+        <span asp-validation-for="TC.Name"></span>
+    </h4>
+
+    <input asp-for="TC.league" value =@Model.current.Id/>
+
+    <button type="submit">Add Team!</button>
+</form>

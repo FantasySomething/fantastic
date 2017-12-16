@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Display";
+}
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using fantastic.Models
+@model fantastic.Models.TeamViewModels.DisplayViewModel
+
+<h2>@Model.myTeam.Name</h2>
+<h4>@Model.myLeague.Name</h4>
+
+<h3>Players</h3>

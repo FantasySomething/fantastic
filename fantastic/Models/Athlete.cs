@@ -11,6 +11,10 @@ namespace fantastic.Models
         public int Id { get; set; }
         public Sport Sport { get; set; }
         public int SportId { get; set; }
+        public League League { get; set; }
+        public int LeagueId { get; set; }
+        public Team team { get; set; }
+        public int teamId { get; set; }
         public Season Season { get; set; }
         public int SeasonId { get; set; }
         public string Name { get; set; }

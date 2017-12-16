@@ -47,9 +47,9 @@ namespace fantastic.Controllers
                     }
                     else
                     {
-                        for(int j =0; j < model.aLeagues[i].teams.Count; j++)
+                        foreach(Team t in model.aLeagues[i].teams)
                         {
-                            if(model.aLeagues[i].teams[j].userId == _userManager.GetUserId(User))
+                            if(t.userId == _userManager.GetUserId(User))
                             {
                                 model.aLeagues.RemoveAt(i);
                             }
@@ -60,7 +60,7 @@ namespace fantastic.Controllers
             }
             else
             {
-                model.aLeagues = _context.leagues.Where(l => l.StartDate > DateTime.Now).ToList();
+                model.aLeagues = _context.leagues?.Where(l => l.StartDate > DateTime.Now).ToList();
             }
             return View(model);
         }
