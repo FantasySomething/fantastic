@@ -62,6 +62,7 @@ namespace fantastic.Controllers
                 newest.AdminId = id;
                 newest.UnitTime = data.Duration;
                 newest.available = new List<Athlete>();
+                newest.teams = new List<Team>();
                 _context.leagues.Add(newest);
                 _context.SaveChanges();
                 return RedirectToAction("Index", "");
@@ -72,18 +73,75 @@ namespace fantastic.Controllers
         [Route("league/details/{ID}")]
         public IActionResult Details(int ID)
         {
-            DetailsViewModel model = new DetailsViewModel();
-            model.current = _context.leagues.SingleOrDefault(l => l.Id == ID);
-            model.user = _context.users.SingleOrDefault(user => user.Id == _userManager.GetUserId(User));
-            model.allSports = _context.sports.ToList();
-            return View(model);
+            League current = _context.leagues.SingleOrDefault(l => l.Id == ID);
+            if (current.AdminId == _userManager.GetUserId(User))
+            {
+                AdminViewModel model = new AdminViewModel();
+                model.current = _context.leagues.SingleOrDefault(l => l.Id == ID);
+                model.allSports = _context.sports.ToList();
+                model.allAthletes = _context.athletes.Where(a => a.LeagueId == ID).ToList();
+                model.allTeams = _context.teams.Where(team => team.leagueId == ID).ToList();
+                return View("admin", model);
+            }
+            else
+            {
+                DetailsViewModel model = new DetailsViewModel();
+                model.current = _context.leagues.SingleOrDefault(l => l.Id == ID);
+                model.user = _context.users.SingleOrDefault(user => user.Id == _userManager.GetUserId(User));
+                model.allSports = _context.sports.ToList();
+                return View(model);
+            }
         }
         [HttpPost]
         [Route("league/newAthlete")]
-        public IActionResult NewAthlete(DetailsViewModel data)
+        public IActionResult NewAthlete(AdminViewModel data)
         {
-            int ID = 2;
-            return RedirectToAction("Details", ID);
+            int ID = data.newAthlete.league;
+            Athlete rookie = new Athlete();
+            League current = _context.leagues.SingleOrDefault(l => l.Id == data.newAthlete.league);
+            rookie.Name = data.newAthlete.name;
+            rookie.SportId = data.newAthlete.sport;
+            rookie.Sport = _context.sports.SingleOrDefault(s => s.Id == rookie.SportId);
+            rookie.Season = data.newAthlete.season;
+            rookie.CreatedAt = DateTime.Now;
+            rookie.UpdatedAt = DateTime.Now;
+            rookie.teamId = 1;
+            rookie.team = _context.teams.SingleOrDefault(t=>t.Id == 0);
+            rookie.League = current;
+            rookie.LeagueId = current.Id;
+            Team team = _context.teams.SingleOrDefault(t => t.Id == 0);
+            team.user = _context.Users.SingleOrDefault(u => u.Id == team.userId);
+            if(team.athletes == null)
+            {
+                team.athletes = new List<Athlete>();
+            }
+            if(current.available == null)
+            {
+                current.available = new List<Athlete>();
+            }
+            team.athletes.Add(rookie);
+            current.available.Add(rookie);
+            _context.athletes.Add(rookie);
+            _context.SaveChanges();            
+            return RedirectToAction("Details", new { ID = ID});
+        }
+        [HttpPost]
+        [Route("league/addAthlete")]
+        public IActionResult AddAthlete(AdminViewModel data)
+        {
+            Athlete guy = _context.athletes.SingleOrDefault(a => a.Id == data.addGuy.athlete);
+            Team team = _context.teams.SingleOrDefault(t => t.Id == data.addGuy.team);
+            guy.teamId = data.addGuy.team;
+            guy.team = team;
+            if(team.athletes == null)
+            {
+                team.athletes = new List<Athlete>();
+            }
+            team.athletes.Add(guy);
+            _context.SaveChanges();
+            int ID = guy.LeagueId;
+            Console.WriteLine(data);
+            return RedirectToAction("Details", new { ID = ID });
         }
     }
 }

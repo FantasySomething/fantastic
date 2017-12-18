@@ -15,8 +15,7 @@ namespace fantastic.Models
         public int LeagueId { get; set; }
         public Team team { get; set; }
         public int teamId { get; set; }
-        public Season Season { get; set; }
-        public int SeasonId { get; set; }
+        public int Season { get; set; }
         public string Name { get; set; }
         public int totalGames { get; set; }
         public int avgScore { get; set; }

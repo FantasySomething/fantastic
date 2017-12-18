@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace fantastic.Models.LeagueViewModels
     public class AthleteAdditionModel
     {
         [Required]
-        [Display(Name = "Existing Athlete")]
-        public Athlete athlete { get; set; }
+        public int team { get; set; }
+
+        [HiddenInput]
+        public int athlete { get; set; }
     }
 }

@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Details";
+}
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using fantastic.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model fantastic.Models.LeagueViewModels.AdminViewModel
+
+<h1>@Model.current.Name</h1>
+@if (DateTime.Now < Model.current.StartDate)
+{
+    <h4>This league is currently accepting new teams.</h4>
+}
+else if (DateTime.Now < Model.current.StartDate.AddDays(Model.current.Length))
+{
+    <h4>DRAFT IN PROGRESS!</h4>
+}
+else if (DateTime.Now < Model.current.EndDate)
+{
+    <h4>This league is active</h4>
+}
+else
+{
+    <h4>This league is inactive</h4>
+}
+
+<h3>Start: @Model.current.StartDate.ToShortDateString()</h3>
+<h3>Completion: @Model.current.EndDate.ToShortDateString()</h3>
+
+<div>
+    <h3>Athletes available for draft:</h3>
+    <table>
+        <thead>
+            <th>Athlete</th>
+            <th>Team</th>
+        </thead>
+        @foreach(Athlete athlete in Model.allAthletes)
+        {
+            <tbody>
+                <td>@athlete.Name</td>
+                @if(athlete.teamId != 0)
+                {
+                    <td>@athlete.team.Name</td>
+                }
+                else
+                {
+                    <td>
+                        <form asp-controller ="League" asp-action="addAthlete" name="addAthlete" method="post">
+                            <select asp-for="addGuy.team">
+                                @foreach(Team team in Model.allTeams)
+                                {<option value =@team.Id>@team.Name</option>}
+                            </select>
+                            <input asp-for="addGuy.athlete" value =@athlete.Id></input>
+                            <button type="submit">Add Athlete!</button>
+                        </form>
+                    </td>
+
+                }
+            </tbody>
+        }
+    </table>
+</div>
+<h2>Add An Athlete to League</h2>
+<form asp-controller="League" asp-action="newAthlete" name="newAthlete" method="post">
+    <h5>
+        <label asp-for="newAthlete.sport"></label>
+        <select asp-for="newAthlete.sport">
+            @foreach (Sport sport in Model.allSports)
+            {
+                <option value=@sport.Id>@sport.Name</option>
+            }
+        </select>
+        <span asp-validation-for="newAthlete.sport"></span>
+    </h5>
+    <h5>
+        <label asp-for="newAthlete.season"></label>
+        <select asp-for="newAthlete.season">
+            @for(int i = 1900; i <=2018; i++)
+            {
+                <option value =@i>@i</option>
+            }
+        </select>
+        <span asp-validation-for="newAthlete.season"></span>
+    </h5>
+    <h5>
+        <label asp-for="newAthlete.name"></label>
+        <input asp-for="newAthlete.name" />
+        <span asp-validation-for="newAthlete.name"></span>
+    </h5>
+    <input asp-for="newAthlete.league" value=@Model.current.Id />
+    <button type="submit">Add Athlete!</button>
+</form>

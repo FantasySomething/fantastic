@@ -66,7 +66,8 @@ namespace fantastic.Controllers
             _context.teams.Add(next);
             next.league.UpdatedAt = DateTime.Now;
             _context.SaveChanges();
-            return RedirectToAction("Details", "League", new { ID = next.leagueId });
+            next = _context.teams.Last();
+            return RedirectToAction("Display", "Team", new { ID = next.Id });
         }
 
         [HttpGet]
