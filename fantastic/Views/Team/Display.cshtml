@@ -11,3 +11,7 @@
 <h4>@Model.myLeague.Name</h4>
 
 <h3>Players</h3>
+@foreach(Athlete player in Model.myPlayers)
+{
+    <p>@player.Name</p>
+}
