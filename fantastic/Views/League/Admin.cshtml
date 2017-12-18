@@ -37,30 +37,31 @@ else
         </thead>
         @foreach(Athlete athlete in Model.allAthletes)
         {
-            <td>@athlete.Name</td>
-            @if(athlete.team != null)
-            {
-                <td>@athlete.team.Name</td>
-            }
-            else
-            {
-                <td>
-                    <form asp-controller ="League" asp-action="addAthlete" name="addAthlete" method="post">
-                        <select asp-for="addGuy.team">
-                            @foreach(Team team in Model.allTeams)
-                            {<option value =@team.Id>@team.Name</option>}
-                        </select>
-                        <button type="submit">Add Athlete!</button>
-                    </form>
-                </td>
+            <tbody>
+                <td>@athlete.Name</td>
+                @if(athlete.teamId != 0)
+                {
+                    <td>@athlete.team.Name</td>
+                }
+                else
+                {
+                    <td>
+                        <form asp-controller ="League" asp-action="addAthlete" name="addAthlete" method="post">
+                            <select asp-for="addGuy.team">
+                                @foreach(Team team in Model.allTeams)
+                                {<option value =@team.Id>@team.Name</option>}
+                            </select>
+                            <input asp-for="addGuy.athlete" value =@athlete.Id></input>
+                            <button type="submit">Add Athlete!</button>
+                        </form>
+                    </td>
 
-            }
+                }
+            </tbody>
         }
     </table>
 </div>
-<div>
-
-</div>
+<h2>Add An Athlete to League</h2>
 <form asp-controller="League" asp-action="newAthlete" name="newAthlete" method="post">
     <h5>
         <label asp-for="newAthlete.sport"></label>

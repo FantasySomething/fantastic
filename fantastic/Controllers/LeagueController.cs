@@ -79,7 +79,7 @@ namespace fantastic.Controllers
                 AdminViewModel model = new AdminViewModel();
                 model.current = _context.leagues.SingleOrDefault(l => l.Id == ID);
                 model.allSports = _context.sports.ToList();
-                model.allAthletes = _context.athletes.Where(a => a.LeagueId == ID).ToList();
+                model.allAthletes = _context.athletes.Where(a => a.LeagueId == ID).Where(a=>a.teamId==0).ToList();
                 model.allTeams = _context.teams.Where(team => team.leagueId == ID).ToList();
                 return View("admin", model);
             }
@@ -124,6 +124,13 @@ namespace fantastic.Controllers
             _context.athletes.Add(rookie);
             _context.SaveChanges();            
             return RedirectToAction("Details", new { ID = ID});
+        }
+        [HttpPost]
+        [Route("league/addAthlete")]
+        public IActionResult AddAthlete(AdminViewModel data)
+        {
+            Console.WriteLine(data);
+            return View();
         }
     }
 }
