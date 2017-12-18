@@ -75,7 +75,7 @@ namespace fantastic.Controllers
         {
             DisplayViewModel model = new DisplayViewModel();
             model.myTeam = _context.teams.SingleOrDefault(t => t.Id == ID);
-            model.myPlayers = _context.athletes.Where(a => a.team.Id == ID).ToList();
+            model.myPlayers = _context.athletes.Where(a => a.teamId == ID).ToList();
             model.myLeague = _context.leagues.SingleOrDefault(l => l.Id == model.myTeam.leagueId);
             return View(model);
         }
