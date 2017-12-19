@@ -2,9 +2,12 @@
     padding-top: 50px;
     padding-bottom: 20px;
     color: orange;
-    background-color: black;
+    background-color: #222;
 }
 
+a {
+    color: white;
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -12,6 +15,17 @@
     padding-right: 15px;
 }
 
+.navbar-inverse {
+    background-color: #000;
+} 
+
+.navbar-inverse .navbar-nav > li > a{
+    color: orange;
+}
+
+.navbar-inverse navbar-btn, .navbar-inverse navbar-brand {
+    color: orange;
+}
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
@@ -21,7 +35,8 @@
 /* Make .svg files in the carousel display properly in older browsers */
 /*.carousel-inner .item img[src$=".svg"] {*/
 .carousel-inner .item img {
-    width: 100%;
+    max-width: 60%;
+    margin: 0 auto;
 }
 
 /* QR code generator */
