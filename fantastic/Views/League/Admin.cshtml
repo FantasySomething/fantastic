@@ -29,7 +29,7 @@ else
 <h3>Completion: @Model.current.EndDate.ToShortDateString()</h3>
 
 <div>
-    <h3>Athletes available for draft:</h3>
+    <h3>Athletes in League:</h3>
     <table>
         <thead>
             <th>Athlete</th>
@@ -39,24 +39,16 @@ else
         {
             <tbody>
                 <td>@athlete.Name</td>
-                @if(athlete.teamId != 0)
-                {
-                    <td>@athlete.team.Name</td>
-                }
-                else
-                {
-                    <td>
-                        <form asp-controller ="League" asp-action="addAthlete" name="addAthlete" method="post">
-                            <select asp-for="addGuy.team">
-                                @foreach(Team team in Model.allTeams)
-                                {<option value =@team.Id>@team.Name</option>}
-                            </select>
-                            <input asp-for="addGuy.athlete" value =@athlete.Id></input>
-                            <button type="submit">Add Athlete!</button>
-                        </form>
-                    </td>
-
-                }
+                <td>
+                    <form asp-controller ="League" asp-action="addAthlete" name="addAthlete" method="post">
+                        <select asp-for="addGuy.team">
+                            @foreach(Team team in Model.allTeams)
+                            {<option value =@team.Id>@team.Name</option>}
+                        </select>
+                        <input asp-for="addGuy.athlete" value =@athlete.Id></input>
+                        <button type="submit">Add Athlete!</button>
+                    </form>
+                </td>
             </tbody>
         }
     </table>

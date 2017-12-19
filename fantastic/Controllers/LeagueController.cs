@@ -53,6 +53,7 @@ namespace fantastic.Controllers
             if (ModelState.IsValid)
             {
                 League newest = new League();
+                Team ph = new Team(); //placeholder team for the league
                 newest.Name = data.Name;
                 newest.StartDate = data.Start;
                 newest.EndDate = data.End;
@@ -63,6 +64,18 @@ namespace fantastic.Controllers
                 newest.UnitTime = data.Duration;
                 newest.available = new List<Athlete>();
                 newest.teams = new List<Team>();
+                ph.athletes = new List<Athlete>();
+                ph.CreatedAt = DateTime.Now;
+                ph.UpdatedAt = DateTime.Now;
+                ph.userId = newest.AdminId;
+                ph.user = newest.Admin;
+                ph.wins = 0;
+                ph.losses = 0;
+                ph.ties = 0;
+                ph.Name = "Draftable";
+                ph.leagueId = newest.Id;
+                ph.league = newest;
+                newest.teams.Add(ph);
                 _context.leagues.Add(newest);
                 _context.SaveChanges();
                 return RedirectToAction("Index", "");
@@ -99,27 +112,26 @@ namespace fantastic.Controllers
             int ID = data.newAthlete.league;
             Athlete rookie = new Athlete();
             League current = _context.leagues.SingleOrDefault(l => l.Id == data.newAthlete.league);
+            Team ph = _context.teams.SingleOrDefault(t => t.userId == current.AdminId && t.leagueId == current.Id);
             rookie.Name = data.newAthlete.name;
             rookie.SportId = data.newAthlete.sport;
             rookie.Sport = _context.sports.SingleOrDefault(s => s.Id == rookie.SportId);
             rookie.Season = data.newAthlete.season;
             rookie.CreatedAt = DateTime.Now;
             rookie.UpdatedAt = DateTime.Now;
-            rookie.teamId = 1;
-            rookie.team = _context.teams.SingleOrDefault(t=>t.Id == 0);
+            rookie.teamId = ph.Id;
+            rookie.team = _context.teams.SingleOrDefault(t=>t.Id == ph.Id);            
             rookie.League = current;
             rookie.LeagueId = current.Id;
-            Team team = _context.teams.SingleOrDefault(t => t.Id == 0);
-            team.user = _context.Users.SingleOrDefault(u => u.Id == team.userId);
-            if(team.athletes == null)
+            if(ph.athletes == null)
             {
-                team.athletes = new List<Athlete>();
+                ph.athletes = new List<Athlete>();
             }
             if(current.available == null)
             {
                 current.available = new List<Athlete>();
             }
-            team.athletes.Add(rookie);
+            ph.athletes.Add(rookie);
             current.available.Add(rookie);
             _context.athletes.Add(rookie);
             _context.SaveChanges();            
