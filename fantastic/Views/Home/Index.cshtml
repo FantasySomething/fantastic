@@ -65,8 +65,11 @@
             <ul>
                 @foreach(var team in Model.myTeams)
                 {
-                    <li><a href="/team/display/@team.Id">@team.Name</a></li>
-
+                    @if(team.Name != "Free Agents")
+                    {
+                        <li><a href="/team/display/@team.Id">@team.Name</a></li>
+                    }
+                    
                 }
             </ul>
         </div>

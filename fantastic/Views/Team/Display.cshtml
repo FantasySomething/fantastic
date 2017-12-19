@@ -8,7 +8,7 @@
 @model fantastic.Models.TeamViewModels.DisplayViewModel
 
 <h2>@Model.myTeam.Name</h2>
-<h4>@Model.myLeague.Name</h4>
+<h2><a href="/league/details/@Model.myTeam.league.Id">@Model.myTeam.league.Name</a></h2>
 
 <h3>Players</h3>
 @foreach(Athlete player in Model.myPlayers)

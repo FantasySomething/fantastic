@@ -12,5 +12,7 @@ namespace fantastic.Models.LeagueViewModels
         public AthleteCreationModel newAthlete { get; set; }
         public AthleteAdditionModel addAthlete { get; set; }
         public List<Sport> allSports { get; set; }
+        public List<Athlete> allAthletes { get; set; }
+        public List<Team> allTeams { get; set; }
     }
 }

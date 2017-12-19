@@ -72,7 +72,7 @@ namespace fantastic.Controllers
                 ph.wins = 0;
                 ph.losses = 0;
                 ph.ties = 0;
-                ph.Name = "Draftable";
+                ph.Name = "Free Agents";
                 ph.leagueId = newest.Id;
                 ph.league = newest;
                 newest.teams.Add(ph);
@@ -102,6 +102,8 @@ namespace fantastic.Controllers
                 model.current = _context.leagues.SingleOrDefault(l => l.Id == ID);
                 model.user = _context.users.SingleOrDefault(user => user.Id == _userManager.GetUserId(User));
                 model.allSports = _context.sports.ToList();
+                model.allAthletes = _context.athletes.Where(a => a.LeagueId == ID).ToList();
+                model.allTeams = _context.teams.Where(team => team.leagueId == ID).ToList();
                 return View(model);
             }
         }
@@ -154,6 +156,22 @@ namespace fantastic.Controllers
             int ID = guy.LeagueId;
             Console.WriteLine(data);
             return RedirectToAction("Details", new { ID = ID });
+        }
+        [HttpGet]
+        [Route("league/delete/{ID}")]
+        public IActionResult Delete(int ID)
+        {
+            League current = _context.leagues.SingleOrDefault(l => l.Id == ID);
+            if (current.AdminId == _userManager.GetUserId(User))
+            {
+                _context.leagues.Remove(current);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "");
+            }
+            else
+            {
+                return RedirectToAction("Details", new { ID = ID });
+            }
         }
     }
 }

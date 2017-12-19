@@ -26,10 +26,46 @@ else
     <h4>This league is inactive</h4>
 }
 
-
 <h3>Start: @Model.current.StartDate.ToShortDateString()</h3>
 <h3>Completion: @Model.current.EndDate.ToShortDateString()</h3>
 
+<h2>Current Standings</h2>
+<table>
+    <tr>
+        <th>Team Name</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Ties</th>
+    </tr>
+    @foreach (Team team in Model.allTeams)
+        {
+        <tr>
+            <td>@team.Name</td>
+            <td>@team.wins</td>
+            <td>@team.losses</td>
+            <td>@team.ties</td>
+        </tr>
+        } 
+</table>
+
 <div>
-    <h3>Athletes available for draft:</h3>
+    <h3>Athletes available:</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Team</th>
+            <th>Sport</th>
+        </tr>
+        @foreach (Athlete athlete in Model.allAthletes)
+            {
+            @if (athlete.team.Name == "Free Agents")
+                {
+                <tr>
+                    <td>@athlete.Name</td>
+                    <td>@athlete.team.Name</td>
+                    <td>@athlete.Sport.Name</td>
+                </tr>
+                }
+            }
+    </table>
 </div>

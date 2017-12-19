@@ -25,6 +25,8 @@ else
     <h4>This league is inactive</h4>
 }
 
+<a href="/league/delete/@Model.current.Id">Delete This League</a>
+
 <h3>Start: @Model.current.StartDate.ToShortDateString()</h3>
 <h3>Completion: @Model.current.EndDate.ToShortDateString()</h3>
 
@@ -32,23 +34,33 @@ else
     <h3>Athletes in League:</h3>
     <table>
         <thead>
-            <th>Athlete</th>
-            <th>Team</th>
+            <tr>
+                <th>Athlete</th>
+                <th>Sport</th>
+                <th>Current Team</th>
+                <th>New Team</th>
+            </tr>
         </thead>
-        @foreach(Athlete athlete in Model.allAthletes)
+        @foreach (Athlete athlete in Model.allAthletes)
         {
             <tbody>
-                <td>@athlete.Name</td>
-                <td>
-                    <form asp-controller ="League" asp-action="addAthlete" name="addAthlete" method="post">
-                        <select asp-for="addGuy.team">
-                            @foreach(Team team in Model.allTeams)
-                            {<option value =@team.Id>@team.Name</option>}
-                        </select>
-                        <input asp-for="addGuy.athlete" value =@athlete.Id></input>
-                        <button type="submit">Add Athlete!</button>
-                    </form>
-                </td>
+                <tr>
+                    <td>@athlete.Name</td>
+                    <td>@athlete.Sport.Name</td>
+                    <td>@athlete.team.Name</td>
+                    <td>
+                        <form asp-controller="League" asp-action="addAthlete" name="addAthlete" method="post">
+                            <select asp-for="addGuy.team">
+                                @foreach (Team team in Model.allTeams)
+                {
+                    <option value=@team.Id>@team.Name</option>
+                }
+                            </select>
+                            <input asp-for="addGuy.athlete" value=@athlete.Id>
+                            <button type="submit">Add Athlete!</button>
+                        </form>
+                    </td>
+                </tr>
             </tbody>
         }
     </table>
@@ -68,9 +80,9 @@ else
     <h5>
         <label asp-for="newAthlete.season"></label>
         <select asp-for="newAthlete.season">
-            @for(int i = 1900; i <=2018; i++)
+            @for (int i = 1900; i <= 2018; i++)
             {
-                <option value =@i>@i</option>
+                <option value=@i>@i</option>
             }
         </select>
         <span asp-validation-for="newAthlete.season"></span>
