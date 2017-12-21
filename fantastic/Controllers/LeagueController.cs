@@ -61,6 +61,7 @@ namespace fantastic.Controllers
                 newest.UpdatedAt = DateTime.Now;
                 newest.Admin = _context.users.SingleOrDefault(user => user.Id == id);
                 newest.AdminId = id;
+                newest.Length = 0;
                 newest.UnitTime = data.Duration;
                 newest.available = new List<Athlete>();
                 newest.teams = new List<Team>();
@@ -71,7 +72,7 @@ namespace fantastic.Controllers
                 ph.user = newest.Admin;
                 ph.wins = 0;
                 ph.losses = 0;
-                ph.ties = 0;
+                ph.score = 0;
                 ph.Name = "Free Agents";
                 ph.leagueId = newest.Id;
                 ph.league = newest;
@@ -166,6 +167,73 @@ namespace fantastic.Controllers
             {
                 _context.leagues.Remove(current);
                 _context.SaveChanges();
+                return RedirectToAction("Index", "");
+            }
+            else
+            {
+                return RedirectToAction("Details", new { ID = ID });
+            }
+        }
+        [HttpGet]
+        [Route("league/advance/{ID}")]
+        public IActionResult Advance(int ID)
+        {
+            League current = _context.leagues.SingleOrDefault(l => l.Id == ID);
+
+            if (current.AdminId == _userManager.GetUserId(User))
+            {
+                if (current.Length < current.UnitTime)
+                {
+                    current.Length++;
+                    int topScore = 0;
+                    foreach (var team in current.teams)
+                    {
+                        if (team.score > topScore)
+                        {
+                            topScore = team.score;
+                        }
+                    }
+                    foreach (var team in current.teams)
+                    {
+                        if (team.score == topScore)
+                        {
+                            team.wins++;
+                            team.score = 0;
+                        }
+                        else
+                        {
+                            team.losses++;
+                            team.score = 0;
+                        }
+                    }
+                    return RedirectToAction("Details", new { ID = ID });
+                }
+                else
+                {
+                    return RedirectToAction("Finalize");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Details", new { ID = ID });
+            }
+        }
+        [HttpGet]
+        [Route("league/finalize/{ID}")]
+        public IActionResult Finalize(int ID)
+        {
+            League current = _context.leagues.SingleOrDefault(l => l.Id == ID);
+            if (current.AdminId == _userManager.GetUserId(User))
+            {
+                int max = 0;
+                foreach (var team in current.teams)
+                {
+                   if (team.wins > max)
+                    {
+                        max = team.wins;
+                        current.winnerId = team.Name;
+                    }
+                }
                 return RedirectToAction("Index", "");
             }
             else

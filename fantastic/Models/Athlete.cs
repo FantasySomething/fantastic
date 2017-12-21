@@ -19,8 +19,13 @@ namespace fantastic.Models
         public string Name { get; set; }
         public int totalGames { get; set; }
         public int avgScore { get; set; }
+        public List<Stats> gameStats { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        
+
+        public Athlete()
+        {
+            List<Stats> gameStats = new List<Stats>();
+        }
     }
 }

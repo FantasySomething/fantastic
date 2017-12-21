@@ -13,10 +13,6 @@
     <h4>This league is currently accepting new teams.</h4>
     <a href="/team/create/@Model.current.Id"><button>Register a Team</button></a>
 }
-else if (DateTime.Now < Model.current.StartDate.AddDays(Model.current.Length))
-{
-    <h4>DRAFT IN PROGRESS!</h4>
-}
 else if (DateTime.Now < Model.current.EndDate)
 {
     <h4>This league is active</h4>
@@ -35,17 +31,18 @@ else
         <th>Team Name</th>
         <th>Wins</th>
         <th>Losses</th>
-        <th>Ties</th>
     </tr>
     @foreach (Team team in Model.allTeams)
-        {
-        <tr>
-            <td>@team.Name</td>
-            <td>@team.wins</td>
-            <td>@team.losses</td>
-            <td>@team.ties</td>
-        </tr>
-        } 
+    {
+        @if (team.Name != "Free Agents")
+        { 
+            <tr>
+                <td><a href="/team/display/@team.Id">@team.Name</a></td>
+                <td>@team.wins</td>
+                <td>@team.losses</td>
+            </tr>
+        }
+    }
 </table>
 
 <div>

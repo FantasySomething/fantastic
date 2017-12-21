@@ -12,17 +12,15 @@
 {
     <h4>This league is currently accepting new teams.</h4>
 }
-else if (DateTime.Now < Model.current.StartDate.AddDays(Model.current.Length))
-{
-    <h4>DRAFT IN PROGRESS!</h4>
-}
 else if (DateTime.Now < Model.current.EndDate)
 {
     <h4>This league is active</h4>
+    <h5><a href="/league/finalize/@Model.current.Id">End This League and Report Results</a></h5>
 }
 else
 {
     <h4>This league is inactive</h4>
+
 }
 
 <a href="/league/delete/@Model.current.Id">Delete This League</a>
@@ -45,16 +43,16 @@ else
         {
             <tbody>
                 <tr>
-                    <td>@athlete.Name</td>
+                    <td><a href="../stats/athlete/@athlete.Id">@athlete.Name</a></td>
                     <td>@athlete.Sport.Name</td>
                     <td>@athlete.team.Name</td>
                     <td>
                         <form asp-controller="League" asp-action="addAthlete" name="addAthlete" method="post">
                             <select asp-for="addGuy.team">
                                 @foreach (Team team in Model.allTeams)
-                {
-                    <option value=@team.Id>@team.Name</option>
-                }
+                                {
+                                    <option value=@team.Id>@team.Name</option>
+                                }
                             </select>
                             <input asp-for="addGuy.athlete" value=@athlete.Id>
                             <button type="submit">Add Athlete!</button>
@@ -65,6 +63,7 @@ else
         }
     </table>
 </div>
+
 <h2>Add An Athlete to League</h2>
 <form asp-controller="League" asp-action="newAthlete" name="newAthlete" method="post">
     <h5>

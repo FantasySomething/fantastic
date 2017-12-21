@@ -61,7 +61,7 @@ namespace fantastic.Controllers
             next.UpdatedAt = DateTime.Now;
             next.wins = 0;
             next.losses = 0;
-            next.ties = 0;
+            next.score = 0;
             next.athletes = new List<Athlete>();
             _context.teams.Add(next);
             next.league.UpdatedAt = DateTime.Now;

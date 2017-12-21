@@ -19,7 +19,7 @@ namespace fantastic.Models
         public List<Athlete> athletes { get; set; }
         public int wins { get; set; }
         public int losses { get; set; }
-        public int ties { get; set; }
+        public int score { get; set; }
 
         public Team()
         {

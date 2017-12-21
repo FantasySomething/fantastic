@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "PlayerStats";
+}
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using fantastic.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model fantastic.Models.LeagueViewModels.StatsViewModel
+
+<h1>@Model.current.Name</h1>
+<h3>Average Score: @Model.current.avgScore</h3>
+
+<div>
+    <table>
+        <tr>
+            <th>Game</th>
+            <th>Score</th>
+            <th>Point</th>
+            <th>Rebound</th>
+            <th>Assist</th>
+            <th>Touchdown</th>
+            <th>Passing Touchdown</th>
+            <th>Yards</th>
+            <th>Passing Yards</th>
+            <th>Turnover</th>
+        </tr>
+        @foreach (Stats stat in Model.allStats)
+        {
+            <tr>
+                <td>@stat.game</td>
+                <td>@stat.Score</td>
+                <td>@stat.point</td>
+                <td>@stat.rebound</td>
+                <td>@stat.assist</td>
+                <td>@stat.touchdown</td>
+                <td>@stat.passing_touchdown</td>
+                <td>@stat.yard</td>
+                <td>@stat.passing_yard</td>
+                <td>@stat.turnover</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<h5><a href="/league/details/@Model.current.LeagueId">Back to League</a></h5>

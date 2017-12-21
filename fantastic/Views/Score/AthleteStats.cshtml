@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "PlayerStats";
+}
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using fantastic.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model fantastic.Models.LeagueViewModels.StatsViewModel
+
+<h1>@Model.current.Name</h1>
+<h3>Average Score: @Model.current.avgScore</h3>
+
+<div>
+    <table>
+        <tr>
+            <th>Game</th>
+            <th>Score</th>
+            <th>Point</th>
+            <th>Rebound</th>
+            <th>Assist</th>
+            <th>Touchdown</th>
+            <th>Passing Touchdown</th>
+            <th>Yards</th>
+            <th>Passing Yards</th>
+            <th>Turnover</th>
+        </tr>
+        @foreach (Stats stat in Model.allStats)
+        {
+            <tr>
+                <td>@stat.game</td>
+                <td>@stat.Score</td>
+                <td>@stat.point</td>
+                <td>@stat.rebound</td>
+                <td>@stat.assist</td>
+                <td>@stat.touchdown</td>
+                <td>@stat.passing_touchdown</td>
+                <td>@stat.yard</td>
+                <td>@stat.passing_yard</td>
+                <td>@stat.turnover</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<form asp-controller="Score" asp-action="UpdateStats" name="UpdateStats" method="post">
+    <h5>
+        <label asp-for="updateStats.game"></label>
+        <input asp-for="updateStats.game" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.point"></label>
+        <input asp-for="updateStats.point" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.rebound"></label>
+        <input asp-for="updateStats.rebound" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.assist"></label>
+        <input asp-for="updateStats.assist" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.touchdown"></label>
+        <input asp-for="updateStats.touchdown" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.passing_touchdown"></label>
+        <input asp-for="updateStats.passing_touchdown" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.yard"></label>
+        <input asp-for="updateStats.yard" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.passing_yard"></label>
+        <input asp-for="updateStats.passing_yard" />
+    </h5>
+    <h5>
+        <label asp-for="updateStats.turnover"></label>
+        <input asp-for="updateStats.turnover" />
+    </h5>
+    <input asp-for="updateStats.athlete" value=@Model.current.Id />
+    <button type="submit">Add Stats for @Model.current.Name</button>
+</form>
+
+<h5><a href="/league/details/@Model.current.LeagueId">Back to League Admin Page</a></h5>
